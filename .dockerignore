@@ -1,0 +1,18 @@
+# The virtual environment (Crucial!)
+django-app/
+env/
+
+# Python byte code (Junk)
+__pycache__/
+*.pyc
+
+# Git history (Unnecessary inside container)
+.git/
+.gitignore
+
+# IDE settings
+.vscode/
+.idea/
+
+# Local Database (Optional, but usually good to ignore)
+db.sqlite3

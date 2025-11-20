@@ -1,13 +1,14 @@
-FROM ubuntu
+# We use the lightweight 'slim' version of Python 3.11
+FROM python:3.11-slim
 
+# Set the folder inside the container where we will work
 WORKDIR /app
 
-COPY . /app/
+# Copy everything from your current folder (.) to the container (.)
+COPY . .
 
-RUN apt-get update && apt-get install -y python3 python3-pip
-RUN pip3 install -r requirements.txt
+# Install the dependencies
+RUN pip install -r requirements.txt
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-
-EXPOSE 8000
-
+# Command to run the server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
