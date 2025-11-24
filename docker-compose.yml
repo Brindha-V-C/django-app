@@ -1,0 +1,32 @@
+version: '3.8'  # The version of the Docker Compose file format
+
+services:
+  # Service 1: Our Django App
+  web:
+    build: .             # Build the image from the Dockerfile in current dir
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app           # Syncs your folder to the container (Hot Reloading!)
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db               # Wait for the DB to start before starting the app
+    environment:
+      - DB_HOST=db       # This is crucial (see explanation below)
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+
+  # Service 2: The Database
+  db:
+    image: postgres:15   # Use the official Postgres image
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data even if container stops
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+# Define the storage volume for the DB
+volumes:
+  postgres_data:
